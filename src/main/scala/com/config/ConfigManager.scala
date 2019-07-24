@@ -7,9 +7,9 @@ object ConfigManager {
   //加载配置文件
   try {
     val in_jdbc = ConfigManager.getClass.getClassLoader.getResourceAsStream("jdbc.properties")
-    val in_dm = ConfigManager.getClass.getClassLoader.getResourceAsStream("dwd_dm.properties")
-    val in_dmv = ConfigManager.getClass.getClassLoader.getResourceAsStream("dm.properties")
+    val in_pro_city = ConfigManager.getClass.getClassLoader.getResourceAsStream("mysql.properties")
     prop.load(in_jdbc)
+    prop.load(in_pro_city)
   }catch {
     case e:Exception=>e.printStackTrace()
   }
