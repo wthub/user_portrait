@@ -109,7 +109,7 @@ object Bz2Parquet {
       })
     // 构建DF
     val df = ss.sqlContext.createDataFrame(l,SchemaUtils.LogStructType)
-    // 存储到指定位置
+    // 转换结果存储到指定位置
     df.write.parquet(args(1))
     ss.stop()
 

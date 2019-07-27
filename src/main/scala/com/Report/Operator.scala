@@ -11,6 +11,7 @@ object Operator {
     val df = ss.read.parquet("/in/part-00000-dadd3ad9-40d9-4fa5-8314-c84105e4dc93-c000.snappy.parquet")
     import ss.implicits._
     val df1: DataFrame = df.map(row => {
+      //获取相应数据
       val ispid = row.getAs[Int]("ispid")
       val ispname = row.getAs[String]("ispname")
       val requestmode = row.getAs[Int]("requestmode")
@@ -25,7 +26,7 @@ object Operator {
       val re_list = appUtils.request(requestmode, processnode)
       val bi_list = appUtils.Bidding(iseffective, isbilling, isbid, iswin, adorderid, adpayment, winprice)
       val cl_list = appUtils.Click(requestmode, iseffective)
-
+      //以运营商、运营商id为K，list数据为V
       ((ispid, ispname), re_list ++ cl_list ++ bi_list)
     }).rdd.reduceByKey((list1, list2) => {
       list1.zip(list2).map(t => t._1 + t._2)

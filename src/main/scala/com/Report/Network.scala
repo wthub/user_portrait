@@ -28,11 +28,15 @@ object Network {
       val cl_list = appUtils.Click(requestmode, iseffective)
 
       ((networkmannerid, networkmannername), re_list++ bi_list++ cl_list)
-    }).rdd.reduceByKey((list1, list2) => {
+    })
+      //转成RDD通过网络类型K进行聚合拉链操作
+      .rdd.reduceByKey((list1, list2) => {
       list1.zip(list2).map(t => t._1 + t._2)
-    }).map(x => {
+    })
+      .map(x => {
       (x._1._1, x._1._2, x._2(0), x._2(1), x._2(2), x._2(3), x._2(4), x._2(7), x._2(8), x._2(5), x._2(6))
     })
+      //转成DF设置列名保存
       .toDF("networkmannerid", "networkmannername", "original", "effective", "ad", "bidd", "scee", "show", "click", "d1", "d2")
 
     df1.write.mode(SaveMode.Ignore).jdbc(JDBCUtils.getJdbcProp()._2,"network",JDBCUtils.getJdbcProp()._1)
