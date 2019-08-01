@@ -2,7 +2,7 @@ package com.parqduetUtils
 
 import redis.clients.jedis.{Jedis, JedisPool, JedisPoolConfig}
 
-object JedisConnectionPool {
+object  JedisConnectionPool {
 
   val config = new JedisPoolConfig
 
